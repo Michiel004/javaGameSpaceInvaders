@@ -38,9 +38,18 @@ public class View {
         graphic.clearRect(0, 0, widthScreen, heightScreen);
     } 
             
-    public void drawRocket(double x, double y){
+    public void drawRocket(double x , double y){
        	Image image = new Image("/space/images/Spaceship.png", 100, 100, false, false);
         graphic.drawImage(image, x, y);
+        
+        // test collision fields
+        /*
+        graphic.setFill(Color.GREEN);
+        graphic.setStroke(Color.BLACK);
+        graphic.setLineWidth(2);
+        graphic.fillRoundRect(x + 25, y , 50, 100, 10, 10);
+        graphic.fillRoundRect(x , y + 50 , 100, 50, 10, 10);
+        */
     }
     
     public void drawAlien(double x, double y, double Health){      

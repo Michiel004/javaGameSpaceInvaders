@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/u%20hasselt%20drive/schakeljaar/Grafische%20applicaties%20in%20Java/netbeans/v3/space%20invader/space%20invader/src/space/invader/Alien.java</file>
-            <file>file:/D:/u%20hasselt%20drive/schakeljaar/Grafische%20applicaties%20in%20Java/netbeans/v3/space%20invader/space%20invader/nbproject/jfx-impl.xml</file>
+            <file>file:/D:/Users/Gebruiker/Documents/GitHub/javaGameSpaceInvaders/src/space/invader/BulletGroupe.java</file>
+            <file>file:/D:/Users/Gebruiker/Documents/GitHub/javaGameSpaceInvaders/src/space/invader/AlienGroupe.java</file>
+            <file>file:/D:/Users/Gebruiker/Documents/GitHub/javaGameSpaceInvaders/src/space/invader/FXMLDocumentController.java</file>
+            <file>file:/D:/Users/Gebruiker/Documents/GitHub/javaGameSpaceInvaders/src/space/invader/Rocket.java</file>
         </group>
     </open-files>
 </project-private>
