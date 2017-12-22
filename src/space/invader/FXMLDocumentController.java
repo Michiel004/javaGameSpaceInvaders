@@ -18,6 +18,7 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -165,6 +166,14 @@ public class FXMLDocumentController implements Initializable {
                 i.remove();
                 lives --;
                 lblLives.setText("" +lives);
+                
+                if (lives <= 0 )
+                {
+                    timer.stop();
+                 
+                    
+    
+                }
            }
              
        }
