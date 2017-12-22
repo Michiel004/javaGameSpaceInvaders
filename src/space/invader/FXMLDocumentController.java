@@ -44,6 +44,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label lblLevel;
     
+    @FXML
+    private Label lblLives;
+    
     private List<Object> objectList = new ArrayList<Object>();
    
     private AnimationTimer timer;
@@ -111,6 +114,7 @@ public class FXMLDocumentController implements Initializable {
         thread.start();
         
         lblLevel.setText("" +level);
+        lblLives.setText("" +lives);
         alienGroupe.setLevel(level);
         
         Timer timer = new Timer();
@@ -158,7 +162,9 @@ public class FXMLDocumentController implements Initializable {
             test1 = rocket.checkCoalition(bullet);
             
              if  ((test1 == true )){
+                i.remove();
                 lives --;
+                lblLives.setText("" +lives);
            }
              
        }
