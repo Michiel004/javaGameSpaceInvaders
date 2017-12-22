@@ -57,6 +57,7 @@ public class FXMLDocumentController implements Initializable {
     private ShieldGroupe shieldGroupe;
     private boolean links = false ;  
     private int level = 1;
+    private int lives = 3;
     
     private  int BulletToRemoveIndex = 0 ;
     
@@ -140,7 +141,7 @@ public class FXMLDocumentController implements Initializable {
                 for (Object object : objectList){
                     object.update();
                 }
-                List<Bullet> bulletList = bulletGroupe.getBulletList();
+               List<Bullet> bulletList = bulletGroupe.getBulletList();
                List<Bullet> bulletListAlien = bulletGroupeAlien.getBulletList();
                
                
@@ -153,7 +154,16 @@ public class FXMLDocumentController implements Initializable {
            if  ((test1 == true )){
                i.remove();
            }
+           
+            test1 = rocket.checkCoalition(bullet);
+            
+             if  ((test1 == true )){
+                lives --;
+           }
+             
        }
+         
+         
                
         
                 
@@ -209,12 +219,7 @@ public class FXMLDocumentController implements Initializable {
              }
                             
          
-           /*             
-            if (alienGroupe.left_x() <= 25 ){
-                 links = false;
-             }
-             
-            */
+          
                
                bulletGroupe.goUp();
                bulletGroupeAlien.goDown();
