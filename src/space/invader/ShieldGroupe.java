@@ -18,12 +18,19 @@ public class ShieldGroupe extends Object  {
 
     public ShieldGroupe(View view) {
         super(view);
+        arrange();
+    }
+    
+    
+      public void arrange(){
+        
         ShieldList = new ArrayList<Shield>();
         ShieldList.add(new Shield(20, 625, super.getView()));
         ShieldList.add(new Shield(250, 625, super.getView()));
         ShieldList.add(new Shield(450, 625, super.getView()));
         ShieldList.add(new Shield(650, 625, super.getView()));
         ShieldList.add(new Shield(850, 625, super.getView()));
+        
     }
 
      public boolean checkCoalition2(Bullet bullet){

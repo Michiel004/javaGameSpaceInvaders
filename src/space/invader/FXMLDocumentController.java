@@ -15,11 +15,14 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -48,6 +51,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label lblLives;
     
+    @FXML
+    private Label lblMilliseconds;
+
+    
     private List<Object> objectList = new ArrayList<Object>();
    
     private AnimationTimer timer;
@@ -74,10 +81,13 @@ public class FXMLDocumentController implements Initializable {
    
    private Media pick2 ;
    private MediaPlayer playerAlien ;
+   private Alert alert = new Alert(AlertType.INFORMATION);
+   
+    private Time time;
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
         String image = "space/images/background.jpg";
         pane.setStyle("-fx-background-image: url('" + image + "'); " +
            "-fx-background-size: cover;"); 
@@ -99,14 +109,12 @@ public class FXMLDocumentController implements Initializable {
         KeyUsed(); 
         startTimer();
      
-         pick = new Media(getClass().getResource("/space/sounds/8bit-laser-shot-01.wav").toExternalForm());
-         player = new MediaPlayer(pick);
-     
-      
-               
-        pick2 = new Media(getClass().getResource("/space/sounds/8bit-laser-shot-01.wav").toExternalForm());
-        playerAlien = new MediaPlayer(pick2);
         
+               
+               alert.setTitle("Information Dialog");
+               alert.setHeaderText("Look, an Information Dialog");
+               alert.setContentText("I have a great message for you!");
+       
       
 
         TimerAlien TimerAlien1 = new TimerAlien(alienGroupe , view);
@@ -119,6 +127,7 @@ public class FXMLDocumentController implements Initializable {
         alienGroupe.setLevel(level);
         
         Timer timer = new Timer();
+        /*
         timer.schedule(new TimerTask(){
             @Override
             public void run() {
@@ -126,13 +135,12 @@ public class FXMLDocumentController implements Initializable {
             }
             
         },500);
-        
+        */
        
 
         
     }   
     
-    private int update = 0;
     private int i = 0;
      private void startTimer() {
 
@@ -146,9 +154,13 @@ public class FXMLDocumentController implements Initializable {
                 for (Object object : objectList){
                     object.update();
                 }
+
+        
+        
+    
                List<Bullet> bulletList = bulletGroupe.getBulletList();
                List<Bullet> bulletListAlien = bulletGroupeAlien.getBulletList();
-               
+              
                
          for (Iterator<Bullet> i = bulletListAlien.iterator(); i.hasNext();){
            Bullet bullet = i.next();
@@ -169,9 +181,14 @@ public class FXMLDocumentController implements Initializable {
                 
                 if (lives <= 0 )
                 {
-                    timer.stop();
+                  //  timer.stop();
                  
-                    
+                  // source : http://code.makery.ch/blog/javafx-dialogs-official/
+                
+                //alert.showAndWait();   
+       
+            //   Platform.exit();
+            
     
                 }
            }
@@ -191,6 +208,14 @@ public class FXMLDocumentController implements Initializable {
            
            if  ((test3 == true) || (test2 == true )){
                i.remove();
+           }
+           
+           if (test2 == true & (alienGroupe.numberofaliens() <= 0) )
+           {
+              level ++;
+              lblLevel.setText("" +level);
+              alienGroupe.arrange();
+              shieldGroupe.arrange();
            }
        }
    
@@ -217,6 +242,7 @@ public class FXMLDocumentController implements Initializable {
         
                bulletGroupeAlien.AdNieweBullet(x + 25, y + 50);
                //player.play();
+               view.speelStartGeluid();;
                i = 0;
                }
               i = i +1;
@@ -238,9 +264,14 @@ public class FXMLDocumentController implements Initializable {
                
                bulletGroupe.goUp();
                bulletGroupeAlien.goDown();
+               
+             //  int lol = time.getmilliseconds();
+               
+               lblMilliseconds.setText( "hallo: ");
              
              //player.stop();
              //playerAlien.stop();
+    
              }
             
                   
@@ -278,11 +309,8 @@ public class FXMLDocumentController implements Initializable {
                  x = rocket.getX();
                  y = rocket.getY(); 
                 bulletGroupe.AdNieweBullet(x + 50, y + 25);
-    
-                
+                view.speelStartGeluid();;
             
-                player.play();
-              
                }
             }
         });

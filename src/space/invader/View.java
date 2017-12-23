@@ -8,6 +8,8 @@ package space.invader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
@@ -98,4 +100,19 @@ public class View {
     public double getWidthScreen(){
         return this.widthScreen;
     }
+    
+    public void speelStartGeluid(){
+        String filePath = "/space/sounds/8bit-laser-shot-01.wav";
+        Media hit = new Media(getClass().getResource(filePath).toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();
+    }
+    
+     public void StartSoundAlienLaser(){
+        String filePath = "/space/sounds/laser_alien.wav";
+        Media hit2 = new Media(getClass().getResource(filePath).toExternalForm());
+        MediaPlayer mediaPlayer2 = new MediaPlayer(hit2);
+        mediaPlayer2.play();
+    }
+    
 }

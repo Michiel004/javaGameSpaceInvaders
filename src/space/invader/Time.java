@@ -9,6 +9,28 @@ package space.invader;
  *
  * @author Gebruiker
  */
+
+
 public class Time {
+    private int milliseconds = 0;
+    
+    
+   
+    
+    
+    public int getmilliseconds ()
+{
+    
+    return this.milliseconds;
+}
+    
+    public void setmilliseconds ( int milliseconds )
+{
+    this.milliseconds = milliseconds;
+}
+    
     
 }
+
+
+
