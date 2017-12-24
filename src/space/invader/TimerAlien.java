@@ -70,13 +70,16 @@ public class TimerAlien implements Runnable {
          alert.setContentText("I have a great message for you!");
                
     }
+    
+    
 
     @Override
     public void run() {
         while (true) {         
         try {
-        time.setmilliseconds(time.getmilliseconds() + 1) ;
-            Thread.sleep(1);
+        //time.setmilliseconds(time.getmilliseconds() + 1) ;
+        this.i = this.i + 1 ;
+        Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(TimerAlien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,12 +87,10 @@ public class TimerAlien implements Runnable {
     }
 
  }
-
+     public int getmilliseconds ()
+{
     
-    
-
-   
-      
-
-      
+    return this.i;
 }
+}
+

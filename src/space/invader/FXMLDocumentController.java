@@ -6,14 +6,28 @@
 package space.invader;
 
 import com.sun.javaws.Main;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -23,6 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -83,6 +98,9 @@ public class FXMLDocumentController implements Initializable {
    private MediaPlayer playerAlien ;
    private Alert alert = new Alert(AlertType.INFORMATION);
    
+   private Data data ;
+   
+   private TimerAlien TimerAlien1;
     private Time time;
      
     @Override
@@ -111,13 +129,14 @@ public class FXMLDocumentController implements Initializable {
      
         
                
-               alert.setTitle("Information Dialog");
-               alert.setHeaderText("Look, an Information Dialog");
-               alert.setContentText("I have a great message for you!");
+               alert.setTitle("End of the game");
+               alert.setHeaderText("You died! and didn't save the empire!");
+               alert.setContentText("Please come back when you are stronger.");
+               alert.setOnHidden(evt -> Platform.exit());
        
       
 
-        TimerAlien TimerAlien1 = new TimerAlien(alienGroupe , view);
+        TimerAlien1 = new TimerAlien(alienGroupe , view);
         Thread thread = new Thread(TimerAlien1);
         thread.setDaemon(true);
         thread.start();
@@ -126,6 +145,7 @@ public class FXMLDocumentController implements Initializable {
         lblLives.setText("" +lives);
         alienGroupe.setLevel(level);
         
+      
         Timer timer = new Timer();
         /*
         timer.schedule(new TimerTask(){
@@ -181,15 +201,13 @@ public class FXMLDocumentController implements Initializable {
                 
                 if (lives <= 0 )
                 {
-                  //  timer.stop();
-                 
+                  
+                timer.stop();
                   // source : http://code.makery.ch/blog/javafx-dialogs-official/
                 
-                //alert.showAndWait();   
-       
-            //   Platform.exit();
-            
-    
+             
+               alert.show();
+             
                 }
            }
              
@@ -266,21 +284,24 @@ public class FXMLDocumentController implements Initializable {
                bulletGroupeAlien.goDown();
                
              //  int lol = time.getmilliseconds();
-               
-               lblMilliseconds.setText( "hallo: ");
-             
+              
+            lblMilliseconds.setText( "hallo: " + TimerAlien1.getmilliseconds());
+            
              //player.stop();
              //playerAlien.stop();
     
              }
+           
             
                   
                
                 
         };
-         
+          
         timer.start();
     }
+     
+   
      
 
 
@@ -309,10 +330,49 @@ public class FXMLDocumentController implements Initializable {
                  x = rocket.getX();
                  y = rocket.getY(); 
                 bulletGroupe.AdNieweBullet(x + 50, y + 25);
-                view.speelStartGeluid();;
-            
-               }
+                view.speelStartGeluid();
+        /*
+                try(FileWriter fw = new FileWriter("myfile.txt", true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    PrintWriter out = new PrintWriter(bw))
+                {
+                        out.println("the text");
+                        //more code
+                        out.println("more text");
+                        //more code
+                        } catch (IOException e) {
+                        //exception handling left as an exercise for the reader
+                        }
+           */     
+       
+      // data.WriteFile("1", "2", "3");
+       
+       PrintWriter writer;
+         
+                   try {
+                       String s = "LOL";
+                       writer = new PrintWriter("myfile.txt", "UTF-8");
+                       writer.println("Michiel Pieters");
+                       writer.println("25");
+                       writer.println("Michiel Pieters");
+                       writer.println("41");
+                       writer.println("Michiel Pieters");
+                       writer.println("140");
+                       writer.close();
+                   } catch (FileNotFoundException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (UnsupportedEncodingException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+    }
+        
+
+               
+               
             }
+
+        
+        
         });
     }
     
