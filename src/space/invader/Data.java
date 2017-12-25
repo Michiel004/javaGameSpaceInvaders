@@ -5,7 +5,10 @@
  */
 package space.invader;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
@@ -35,4 +38,24 @@ public class Data {
                    }
     }
     
+     public void readFile()
+    {
+      //  source : https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
+          try(BufferedReader br = new BufferedReader(new FileReader("myfile.txt"))) {
+    StringBuilder sb = new StringBuilder();
+    String line = br.readLine();
+
+    while (line != null) {
+        sb.append(line);
+        sb.append(System.lineSeparator());
+        line = br.readLine();
+    }
+    
+   
+    String everything = sb.toString();
+    System.out.println("" + everything);
+}                  catch (IOException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+    }
 }

@@ -14,7 +14,9 @@ package space.invader;
 public class Time {
     private int milliseconds = 0;
     
+    public void Time() {
     
+}
    
     
     

@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,8 +38,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -91,18 +94,23 @@ public class FXMLDocumentController implements Initializable {
     private boolean test2 = false;
     private boolean test3 = false;
     
+    private boolean test4 = false;
+    
+    
    private Media pick ;
    private MediaPlayer player ;
    
    private Media pick2 ;
    private MediaPlayer playerAlien ;
    private Alert alert = new Alert(AlertType.INFORMATION);
+   private TextInputDialog dialog;
+   private Button btOk;
    
    private Data data ;
    
    private TimerAlien TimerAlien1;
-    private Time time;
-     
+   private Time time;
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -133,6 +141,14 @@ public class FXMLDocumentController implements Initializable {
                alert.setHeaderText("You died! and didn't save the empire!");
                alert.setContentText("Please come back when you are stronger.");
                alert.setOnHidden(evt -> Platform.exit());
+               
+               TextInputDialog dialog = new TextInputDialog("walter");
+              dialog.setTitle("Text Input Dialog");
+              dialog.setHeaderText("Look, a Text Input Dialog");
+              dialog.setContentText("Please enter your name:");
+              Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK); 
+            
+ 
        
       
 
@@ -214,6 +230,24 @@ public class FXMLDocumentController implements Initializable {
        }
          
          
+         if (test4 == false)
+         {
+             test4 = true;
+              TextInputDialog dialog = new TextInputDialog("walter");
+              dialog.setTitle("Text Input Dialog");
+               dialog.setHeaderText("Look, a Text Input Dialog");
+                dialog.setContentText("Please enter your name:");
+
+                    // Traditional way to get the response value.
+                    dialog.show();
+                   
+                   
+
+                
+         }
+         
+        
+                        
                
         
                 
@@ -291,7 +325,11 @@ public class FXMLDocumentController implements Initializable {
              //playerAlien.stop();
     
              }
-           
+
+            private boolean validateAndStore() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+               
             
                   
                
@@ -302,7 +340,7 @@ public class FXMLDocumentController implements Initializable {
     }
      
    
-     
+ 
 
 
          
@@ -331,49 +369,111 @@ public class FXMLDocumentController implements Initializable {
                  y = rocket.getY(); 
                 bulletGroupe.AdNieweBullet(x + 50, y + 25);
                 view.speelStartGeluid();
-        /*
-                try(FileWriter fw = new FileWriter("myfile.txt", true);
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    PrintWriter out = new PrintWriter(bw))
-                {
-                        out.println("the text");
-                        //more code
-                        out.println("more text");
-                        //more code
-                        } catch (IOException e) {
-                        //exception handling left as an exercise for the reader
-                        }
-           */     
-       
-      // data.WriteFile("1", "2", "3");
-       
-       PrintWriter writer;
+ 
+                
+                TextInputDialog dialog = new TextInputDialog("walter");
+dialog.setTitle("Text Input Dialog");
+dialog.setHeaderText("Look, a Text Input Dialog");
+dialog.setContentText("Please enter your name:");
+
+// Traditional way to get the response value.
+Optional<String> result = dialog.showAndWait();
+if (result.isPresent()){
+    System.out.println("Your name: " + result.get());
+}
+
+     
+                  String[]   strread ;
+                  String name = "Naam 2";
+                  strread =  readFile();
+                   int score1;
+                  String name1;
+                  int score2;
+                  String name2;
+                  int score3;
+                  String name3;
+                  name1 = strread[0];
+                  score1 = Integer.parseInt(strread[1]);
+                  name2 = strread[2];
+                  score2 = Integer.parseInt(strread[3]);
+                  name3 = strread[4];
+                  score3 = Integer.parseInt(strread[5]);
+                  
+                int playdTime = TimerAlien1.getmilliseconds();
+                
+                  
+                 
+                  
+                  if (  score1 > playdTime )
+                  {
+                     name1 = name;
+                     score1 = playdTime;
+                      
+                  }
+                  else if (Integer.parseInt(strread[3]) > playdTime)
+                  {
+                      name2 = name;
+                      score2 = playdTime;
+                  }
+                  else if ( Integer.parseInt(strread[5]) > playdTime)
+                  {
+                      name3 = name;
+                      score3 = playdTime;
+                  }
+                 
+                 
+                   PrintWriter writer;
          
                    try {
-                       String s = "LOL";
                        writer = new PrintWriter("myfile.txt", "UTF-8");
-                       writer.println("Michiel Pieters");
-                       writer.println("25");
-                       writer.println("Michiel Pieters");
-                       writer.println("41");
-                       writer.println("Michiel Pieters");
-                       writer.println("140");
+                       writer.println(name1);
+                       writer.println(score1);
+                       writer.println(name2);
+                       writer.println(score2);
+                       writer.println(name3);
+                       writer.println(score3);
                        writer.close();
                    } catch (FileNotFoundException ex) {
                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                    } catch (UnsupportedEncodingException ex) {
                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                    }
-    }
-        
-
                
                
             }
-
+}
         
         
         });
     }
     
+    
+    public String[]  readFile()
+    {
+    String[] strarry ;
+    strarry = new String[6];
+      //  source : https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
+          try(BufferedReader br = new BufferedReader(new FileReader("myfile.txt"))) {
+    
+    int i = 0;
+    StringBuilder sb = new StringBuilder();
+    String line = br.readLine();
+
+    while (line != null) {
+        strarry[i] = line;
+        i ++;
+        line = br.readLine();
+    }
+    
+   
+    //String everything = sb.toString();
+    //System.out.println("" + strarry[5]);
+}                  catch (IOException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+          return strarry;
+    }
+    
 }
+
+
