@@ -76,7 +76,6 @@ public class FXMLDocumentController implements Initializable {
     private List<Object> objectList = new ArrayList<Object>();
    
     private AnimationTimer timer;
-    private AnimationTimer timer2;
    
     private View view;
     private Rocket rocket;
@@ -93,23 +92,20 @@ public class FXMLDocumentController implements Initializable {
     private boolean test1 = false;
     private boolean test2 = false;
     private boolean test3 = false;
-    
     private boolean test4 = false;
     
+    private int playdTime = 0 ;
     
-   private Media pick ;
-   private MediaPlayer player ;
-   
-   private Media pick2 ;
-   private MediaPlayer playerAlien ;
+    
+
    private Alert alert = new Alert(AlertType.INFORMATION);
    private TextInputDialog dialog;
    private Button btOk;
    
-   private Data data ;
+
    
    private TimerAlien TimerAlien1;
-   private Time time;
+  
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -142,12 +138,77 @@ public class FXMLDocumentController implements Initializable {
                alert.setContentText("Please come back when you are stronger.");
                alert.setOnHidden(evt -> Platform.exit());
                
-               TextInputDialog dialog = new TextInputDialog("walter");
-              dialog.setTitle("Text Input Dialog");
-              dialog.setHeaderText("Look, a Text Input Dialog");
+              dialog = new TextInputDialog("");
+              dialog.setTitle("you arre a winner");
+              dialog.setHeaderText("Congratulations you saved the empire! ");
               dialog.setContentText("Please enter your name:");
-              Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK); 
+              btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK); 
             
+              btOk.setOnAction(new EventHandler<ActionEvent>() {
+    @Override public void handle(ActionEvent e) {
+      
+     String  name =   dialog.getEditor().getText();
+       
+      
+       
+                  String[]   strread ;
+              
+                  strread =  readFile();
+                  int score1;
+                  String name1;
+                  int score2;
+                  String name2;
+                  int score3;
+                  String name3;
+                  name1 = strread[0];
+                  score1 = Integer.parseInt(strread[1]);
+                  name2 = strread[2];
+                  score2 = Integer.parseInt(strread[3]);
+                  name3 = strread[4];
+                  score3 = Integer.parseInt(strread[5]);
+                  
+                
+              
+                  
+                 
+                  
+                  if (  score1 > playdTime )
+                  {
+                     name1 = name;
+                     score1 = playdTime;
+                      
+                  }
+                  else if (Integer.parseInt(strread[3]) > playdTime)
+                  {
+                      name2 = name;
+                      score2 = playdTime;
+                  }
+                  else if ( Integer.parseInt(strread[5]) > playdTime)
+                  {
+                      name3 = name;
+                      score3 = playdTime;
+                  }
+                 
+                 
+                   PrintWriter writer;
+         
+                   try {
+                       writer = new PrintWriter("myfile.txt", "UTF-8");
+                       writer.println(name1);
+                       writer.println(score1);
+                       writer.println(name2);
+                       writer.println(score2);
+                       writer.println(name3);
+                       writer.println(score3);
+                       writer.close();
+                   } catch (FileNotFoundException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (UnsupportedEncodingException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+       Platform.exit();
+    }
+});
  
        
       
@@ -158,20 +219,12 @@ public class FXMLDocumentController implements Initializable {
         thread.start();
         
         lblLevel.setText("" +level);
-        lblLives.setText("" +lives);
+        lblLives.setText("lives : " +lives);
         alienGroupe.setLevel(level);
         
       
         Timer timer = new Timer();
-        /*
-        timer.schedule(new TimerTask(){
-            @Override
-            public void run() {
-               
-            }
-            
-        },500);
-        */
+   
        
 
         
@@ -212,13 +265,14 @@ public class FXMLDocumentController implements Initializable {
             
              if  ((test1 == true )){
                 i.remove();
-                lives --;
-                lblLives.setText("" +lives);
-                
+               //lives --;
+              
+                lblLives.setText("lives : " +lives);
+              
                 if (lives <= 0 )
                 {
-                  
-                timer.stop();
+                  timer.stop();
+                  lblLives.setText("lives : " + 0);
                   // source : http://code.makery.ch/blog/javafx-dialogs-official/
                 
              
@@ -230,21 +284,7 @@ public class FXMLDocumentController implements Initializable {
        }
          
          
-         if (test4 == false)
-         {
-             test4 = true;
-              TextInputDialog dialog = new TextInputDialog("walter");
-              dialog.setTitle("Text Input Dialog");
-               dialog.setHeaderText("Look, a Text Input Dialog");
-                dialog.setContentText("Please enter your name:");
-
-                    // Traditional way to get the response value.
-                    dialog.show();
-                   
-                   
-
-                
-         }
+       
          
         
                         
@@ -268,6 +308,15 @@ public class FXMLDocumentController implements Initializable {
               lblLevel.setText("" +level);
               alienGroupe.arrange();
               shieldGroupe.arrange();
+              lives = 3;
+              lblLives.setText("lives: " +lives);
+              if (level >= 2) 
+              {
+                 playdTime = TimerAlien1.getmilliseconds();
+                 timer.stop();
+                 view.clearScreen();
+                 dialog.show();
+              }
            }
        }
    
@@ -293,7 +342,7 @@ public class FXMLDocumentController implements Initializable {
                  y = alienGroupe.RandomAlien(1);
         
                bulletGroupeAlien.AdNieweBullet(x + 25, y + 50);
-               //player.play();
+              
                view.speelStartGeluid();;
                i = 0;
                }
@@ -310,25 +359,15 @@ public class FXMLDocumentController implements Initializable {
                 
                   
              }
-                            
-         
-          
-               
                bulletGroupe.goUp();
                bulletGroupeAlien.goDown();
                
-             //  int lol = time.getmilliseconds();
+         
               
-            lblMilliseconds.setText( "hallo: " + TimerAlien1.getmilliseconds());
-            
-             //player.stop();
-             //playerAlien.stop();
-    
+            lblMilliseconds.setText( "seconds played: " + TimerAlien1.getmilliseconds());
              }
 
-            private boolean validateAndStore() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
+          
                
             
                   
@@ -357,88 +396,19 @@ public class FXMLDocumentController implements Initializable {
                if (event.getCode() == KeyCode.RIGHT) {
                    rocket.goRigth();
          
-              
+             
                  
                }
-               if (event.getCode() == KeyCode.SPACE) {
-             
+               if ((event.getCode() == KeyCode.SPACE) || (event.getCode() == KeyCode.UP)) {
+                 view.speelStartGeluid();
                  double x = 0;
                  double y = 0;
                  
                  x = rocket.getX();
                  y = rocket.getY(); 
                 bulletGroupe.AdNieweBullet(x + 50, y + 25);
-                view.speelStartGeluid();
- 
-                
-                TextInputDialog dialog = new TextInputDialog("walter");
-dialog.setTitle("Text Input Dialog");
-dialog.setHeaderText("Look, a Text Input Dialog");
-dialog.setContentText("Please enter your name:");
-
-// Traditional way to get the response value.
-Optional<String> result = dialog.showAndWait();
-if (result.isPresent()){
-    System.out.println("Your name: " + result.get());
-}
-
-     
-                  String[]   strread ;
-                  String name = "Naam 2";
-                  strread =  readFile();
-                   int score1;
-                  String name1;
-                  int score2;
-                  String name2;
-                  int score3;
-                  String name3;
-                  name1 = strread[0];
-                  score1 = Integer.parseInt(strread[1]);
-                  name2 = strread[2];
-                  score2 = Integer.parseInt(strread[3]);
-                  name3 = strread[4];
-                  score3 = Integer.parseInt(strread[5]);
-                  
-                int playdTime = TimerAlien1.getmilliseconds();
-                
-                  
-                 
-                  
-                  if (  score1 > playdTime )
-                  {
-                     name1 = name;
-                     score1 = playdTime;
-                      
-                  }
-                  else if (Integer.parseInt(strread[3]) > playdTime)
-                  {
-                      name2 = name;
-                      score2 = playdTime;
-                  }
-                  else if ( Integer.parseInt(strread[5]) > playdTime)
-                  {
-                      name3 = name;
-                      score3 = playdTime;
-                  }
-                 
-                 
-                   PrintWriter writer;
-         
-                   try {
-                       writer = new PrintWriter("myfile.txt", "UTF-8");
-                       writer.println(name1);
-                       writer.println(score1);
-                       writer.println(name2);
-                       writer.println(score2);
-                       writer.println(name3);
-                       writer.println(score3);
-                       writer.close();
-                   } catch (FileNotFoundException ex) {
-                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                   } catch (UnsupportedEncodingException ex) {
-                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                   }
                
+              
                
             }
 }
@@ -464,10 +434,7 @@ if (result.isPresent()){
         i ++;
         line = br.readLine();
     }
-    
    
-    //String everything = sb.toString();
-    //System.out.println("" + strarry[5]);
 }                  catch (IOException ex) {
                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                    }

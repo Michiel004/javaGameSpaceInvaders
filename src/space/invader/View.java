@@ -102,12 +102,12 @@ public class View {
     }
     
     public void speelStartGeluid(){
-        /*
+        
         String filePath = "/space/sounds/8bit-laser-shot-01.wav";
         Media hit = new Media(getClass().getResource(filePath).toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(hit);
         mediaPlayer.play();
-*/
+
     }
     
      public void StartSoundAlienLaser(){
