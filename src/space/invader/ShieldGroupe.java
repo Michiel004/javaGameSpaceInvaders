@@ -33,7 +33,7 @@ public class ShieldGroupe extends Object  {
         
     }
 
-     public boolean checkCoalition2(Bullet bullet){
+     public boolean checkCoalitionUP(Bullet bullet){
             
         for (Shield shield : ShieldList){
         //  System.out.println("B :" + bullet.getY() + "S :" + shield.getY());
@@ -61,8 +61,8 @@ public class ShieldGroupe extends Object  {
      }
      
      
-     
-      public boolean checkCoalition3(Bullet bullet){
+   
+      public boolean checkCoalitionDown(Bullet bullet){
             
         for (Shield shield : ShieldList){
           if (bullet.getY() + 20 >= shield.getY())
@@ -89,6 +89,7 @@ public class ShieldGroupe extends Object  {
 
       
      }
+
     @Override
     public void update() {
          for (Shield shield : ShieldList){

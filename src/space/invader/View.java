@@ -26,6 +26,9 @@ public class View {
     private double widthScreen;
     private double heightScreen;
     private GraphicsContext graphic;
+    private MediaPlayer mediaPlayer;
+    private Media hit ;
+    
     
     
     public View(Canvas canvas){
@@ -34,10 +37,21 @@ public class View {
         this.heightScreen = canvas.getBoundsInParent().getHeight();
         
         this.graphic = canvas.getGraphicsContext2D();
+        
+        String filePath = "/space/sounds/8bit-laser-shot-01.wav";
+        hit = new Media(getClass().getResource(filePath).toExternalForm());
+        mediaPlayer = new MediaPlayer(hit);
+        
     }
     
     public void clearScreen(){
         graphic.clearRect(0, 0, widthScreen, heightScreen);
+        
+        String filePath = "/space/sounds/8bit-laser-shot-01.wav";
+        hit = new Media(getClass().getResource(filePath).toExternalForm());
+        mediaPlayer = new MediaPlayer(hit);
+        
+       
     } 
             
     public void drawRocket(double x , double y){
@@ -103,9 +117,7 @@ public class View {
     
     public void speelStartGeluid(){
         
-        String filePath = "/space/sounds/8bit-laser-shot-01.wav";
-        Media hit = new Media(getClass().getResource(filePath).toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        
         mediaPlayer.play();
 
     }

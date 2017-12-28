@@ -1,6 +1,6 @@
 test
 10
-walter
-21
+
+18
 Michiel Pieters
 21

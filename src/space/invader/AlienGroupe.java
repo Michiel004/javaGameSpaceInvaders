@@ -138,22 +138,10 @@ public class AlienGroupe extends Object {
           return lastIndex ;
      }
      
-     public void checkCoalition(Bullet bullet){
-         for (Alien alien : alienList){
-           if(calcDistance(bullet.getX(), bullet.getY(), alien.getX(), alien.getY()) <= 25){
-             System.out.println("Boom");
-         }
-       }
-     }
-     
-     public double calcDistance(double xBullet, double yBullet, double xAlien, double yAlien){
-         double x = xBullet - xAlien;
-         double y = yBullet - yAlien;
-         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-     }
      
      
-       public boolean checkCoalition2(Bullet bullet){
+     
+       public boolean checkCoalition(Bullet bullet){
          for (Alien alien : alienList){
           if (alien.getY() - 20  <= bullet.getY() & (alien.getY() + 50  >= bullet.getY()))
           {
@@ -181,12 +169,7 @@ public class AlienGroupe extends Object {
          return false;
      }
      
-     public double calcDistance2(double xBullet, double yBullet, double xAlien, double yAlien){
-         double x = xBullet - xAlien;
-         double y = yBullet - yAlien;
-         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-     }
-     
+    
      public void setLevel(double level)
      {
          this.Level = level;

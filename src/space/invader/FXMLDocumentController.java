@@ -87,12 +87,10 @@ public class FXMLDocumentController implements Initializable {
     private int level = 1;
     private int lives = 3;
     
-    private  int BulletToRemoveIndex = 0 ;
     
-    private boolean test1 = false;
-    private boolean test2 = false;
-    private boolean test3 = false;
-    private boolean test4 = false;
+    private boolean testShieldGroupeCoalition = false;
+    private boolean testalienGroupeCoalition = false;
+    private boolean testshieldGroupCoalition = false;
     
     private int playdTime = 0 ;
     
@@ -254,18 +252,18 @@ public class FXMLDocumentController implements Initializable {
          for (Iterator<Bullet> i = bulletListAlien.iterator(); i.hasNext();){
            Bullet bullet = i.next();
          
-           test1 = shieldGroupe.checkCoalition3(bullet);
+           testShieldGroupeCoalition = shieldGroupe.checkCoalitionDown(bullet);
           
            
-           if  ((test1 == true )){
+           if  ((testShieldGroupeCoalition == true )){
                i.remove();
            }
            
-            test1 = rocket.checkCoalition(bullet);
+          boolean  testRocketCoalition = rocket.checkCoalition(bullet);
             
-             if  ((test1 == true )){
+             if  ((testRocketCoalition == true )){
                 i.remove();
-               //lives --;
+                lives --;
               
                 lblLives.setText("lives : " +lives);
               
@@ -273,9 +271,7 @@ public class FXMLDocumentController implements Initializable {
                 {
                   timer.stop();
                   lblLives.setText("lives : " + 0);
-                  // source : http://code.makery.ch/blog/javafx-dialogs-official/
-                
-             
+                  // source : http://code.makery.ch/blog/javafx-dialogs-official
                alert.show();
              
                 }
@@ -295,14 +291,14 @@ public class FXMLDocumentController implements Initializable {
            Bullet bullet = i.next();
          
          
-           test2 = alienGroupe.checkCoalition2(bullet);
-           test3 = shieldGroupe.checkCoalition2(bullet);
+           testalienGroupeCoalition = alienGroupe.checkCoalition(bullet);
+           testshieldGroupCoalition = shieldGroupe.checkCoalitionUP(bullet);
            
-           if  ((test3 == true) || (test2 == true )){
+           if  ((testshieldGroupCoalition == true) || (testalienGroupeCoalition == true )){
                i.remove();
            }
            
-           if (test2 == true & (alienGroupe.numberofaliens() <= 0) )
+           if (testalienGroupeCoalition == true & (alienGroupe.numberofaliens() <= 0) )
            {
               level ++;
               lblLevel.setText("" +level);

@@ -34,7 +34,7 @@ public class BulletGroupe extends Object {
        for (Iterator<Bullet> i = bulletList.iterator(); i.hasNext();){
            Bullet bullet = i.next();
            bullet.goUp();
-           if  (bullet.getY() <= -100){
+           if  (bullet.getY() >= 1000){
                i.remove();
            }
        }
