@@ -8,6 +8,7 @@ package space.invader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -28,11 +29,17 @@ public class View {
     private GraphicsContext graphic;
     private MediaPlayer mediaPlayer;
     private Media hit ;
+    private AnchorPane pane;
     
     
-    
-    public View(Canvas canvas){
+    public View(Canvas canvas , AnchorPane pane){
         this.canvas = canvas;
+        this.pane = pane;
+        this.canvas.setFocusTraversable(true);
+         String image = "space/images/background.jpg";
+        pane.setStyle("-fx-background-image: url('" + image + "'); " +
+           "-fx-background-size: cover;"); 
+        
         this.widthScreen = canvas.getBoundsInParent().getWidth();
         this.heightScreen = canvas.getBoundsInParent().getHeight();
         

@@ -87,6 +87,8 @@ public class FXMLDocumentController implements Initializable {
     private int level = 1;
     private int lives = 3;
     
+    private GeneralmodelSpace generalmodelSpace;
+    
     
     private boolean testShieldGroupeCoalition = false;
     private boolean testalienGroupeCoalition = false;
@@ -106,14 +108,10 @@ public class FXMLDocumentController implements Initializable {
   
    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        String image = "space/images/background.jpg";
-        pane.setStyle("-fx-background-image: url('" + image + "'); " +
-           "-fx-background-size: cover;"); 
+    public void initialize(URL url, ResourceBundle rb) { 
         
-        canvas.setFocusTraversable(true);
-        view = new View(canvas);
+        view = new View(canvas , pane);
+        generalmodelSpace = new GeneralmodelSpace(view);
         bulletGroupe = new BulletGroupe(view);
         bulletGroupeAlien = new BulletGroupe(view);
         shieldGroupe = new ShieldGroupe(view);
@@ -125,26 +123,31 @@ public class FXMLDocumentController implements Initializable {
         objectList.add(rocket);
         objectList.add(shieldGroupe);
         
+        
+      
+       
       
         KeyUsed(); 
         startTimer();
      
         
                
-               alert.setTitle("End of the game");
-               alert.setHeaderText("You died! and didn't save the empire!");
-               alert.setContentText("Please come back when you are stronger.");
-               alert.setOnHidden(evt -> Platform.exit());
+              alert.setTitle("End of the game");
+              alert.setHeaderText("You died! and didn't save the empire!");
+              alert.setContentText("Please come back when you are stronger.");
+              alert.setOnHidden(evt -> Platform.exit());
                
               dialog = new TextInputDialog("");
               dialog.setTitle("you arre a winner");
               dialog.setHeaderText("Congratulations you saved the empire! ");
               dialog.setContentText("Please enter your name:");
               btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK); 
+              
+              
             
               btOk.setOnAction(new EventHandler<ActionEvent>() {
     @Override public void handle(ActionEvent e) {
-      
+     
      String  name =   dialog.getEditor().getText();
        
       
@@ -205,178 +208,46 @@ public class FXMLDocumentController implements Initializable {
                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                    }
        Platform.exit();
+
     }
+    
 });
  
-       
+      
       
 
         TimerAlien1 = new TimerAlien(alienGroupe , view);
         Thread thread = new Thread(TimerAlien1);
         thread.setDaemon(true);
-        thread.start();
-        
-        lblLevel.setText("" +level);
-        lblLives.setText("lives : " +lives);
-        alienGroupe.setLevel(level);
-        
-      
-        Timer timer = new Timer();
+       
    
        
 
         
     }   
     
-    private int i = 0;
+
      private void startTimer() {
-
+             
         timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-        
-                view.clearScreen();
-              
-                
-                for (Object object : objectList){
-                    object.update();
-                }
-
-        
-        
-    
-               List<Bullet> bulletList = bulletGroupe.getBulletList();
-               List<Bullet> bulletListAlien = bulletGroupeAlien.getBulletList();
-              
-               
-         for (Iterator<Bullet> i = bulletListAlien.iterator(); i.hasNext();){
-           Bullet bullet = i.next();
-         
-           testShieldGroupeCoalition = shieldGroupe.checkCoalitionDown(bullet);
-          
-           
-           if  ((testShieldGroupeCoalition == true )){
-               i.remove();
-           }
-           
-          boolean  testRocketCoalition = rocket.checkCoalition(bullet);
-            
-             if  ((testRocketCoalition == true )){
-                i.remove();
-                lives --;
-              
-                lblLives.setText("lives : " +lives);
-              
-                if (lives <= 0 )
-                {
-                  timer.stop();
-                  lblLives.setText("lives : " + 0);
-                  // source : http://code.makery.ch/blog/javafx-dialogs-official
-               alert.show();
-             
-                }
-           }
-             
-       }
-         
-         
        
-         
-        
-                        
-               
-        
-                
-           for (Iterator<Bullet> i = bulletList.iterator(); i.hasNext();){
-           Bullet bullet = i.next();
-         
-         
-           testalienGroupeCoalition = alienGroupe.checkCoalition(bullet);
-           testshieldGroupCoalition = shieldGroupe.checkCoalitionUP(bullet);
-           
-           if  ((testshieldGroupCoalition == true) || (testalienGroupeCoalition == true )){
-               i.remove();
-           }
-           
-           if (testalienGroupeCoalition == true & (alienGroupe.numberofaliens() <= 0) )
-           {
-              level ++;
-              lblLevel.setText("" +level);
-              alienGroupe.arrange();
-              shieldGroupe.arrange();
-              lives = 3;
-              lblLives.setText("lives: " +lives);
-              if (level >= 2) 
-              {
-                 playdTime = TimerAlien1.getmilliseconds();
-                 timer.stop();
-                 view.clearScreen();
-                 dialog.show();
-              }
-           }
-       }
-   
-            if (alienGroupe.left_x() <= 25 ){
-                 links = false;
-             }
-             
-             if (alienGroupe.right_x()  >= 925  ){
-                   links = true;
-                   if (alienGroupe.Max_y() < 500)
-                   {
-                       alienGroupe.goDown();
-                   }
-                    
-             }
-             
-              if(i >= 4 & (alienGroupe.numberofaliens() >= 1))
-               {
-                 double x = 0;
-                 double y = 0;
-                 
-                 x = alienGroupe.RandomAlien(0);
-                 y = alienGroupe.RandomAlien(1);
-        
-               bulletGroupeAlien.AdNieweBullet(x + 25, y + 50);
-              
-               view.speelStartGeluid();;
-               i = 0;
-               }
-              i = i +1;
-             
-                
-             if (links ) {
-                   alienGroupe.goLeft();
-                  
-             }
-             else 
-             {
-                   alienGroupe.goRigth();
-                
-                  
-             }
-               bulletGroupe.goUp();
-               bulletGroupeAlien.goDown();
-               
-         
-              
-            lblMilliseconds.setText( "seconds played: " + TimerAlien1.getmilliseconds());
-             }
-
-          
-               
+            @Override
             
+            public void handle(long now) {
+  
+            }
                   
                
-                
+                  
         };
-          
+    
         timer.start();
+        
+   
     }
      
    
  
-
 
          
      
@@ -387,22 +258,20 @@ public class FXMLDocumentController implements Initializable {
             @Override
             public void handle(KeyEvent event) {   
                if (event.getCode() == KeyCode.LEFT) {
-                  rocket.goLeft();
+                  //rocket.goLeft();
+                  generalmodelSpace.rocketgoLeft();
                }
                if (event.getCode() == KeyCode.RIGHT) {
-                   rocket.goRigth();
-         
+                   //rocket.goRigth();
+                   generalmodelSpace.rocketgoRigth();
              
                  
                }
                if ((event.getCode() == KeyCode.SPACE) || (event.getCode() == KeyCode.UP)) {
                  view.speelStartGeluid();
-                 double x = 0;
-                 double y = 0;
                  
-                 x = rocket.getX();
-                 y = rocket.getY(); 
-                bulletGroupe.AdNieweBullet(x + 50, y + 25);
+                generalmodelSpace.adBullet();
+                //bulletGroupe.AdNieweBullet(x + 50, y + 25);
                
               
                
