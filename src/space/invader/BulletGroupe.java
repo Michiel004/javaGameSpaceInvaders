@@ -19,6 +19,7 @@ public class BulletGroupe extends Object {
 
     public BulletGroupe(View view) {
         super(view);
+        
         bulletList = new ArrayList<Bullet>();
        
     }
