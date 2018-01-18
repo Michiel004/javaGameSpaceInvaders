@@ -19,19 +19,15 @@ import javafx.scene.media.MediaPlayer;
  */
 public class TimerAlien implements Runnable {
    
- // private View view;
-
-  private View view; 
 
 
-   private Alert alert = new Alert(Alert.AlertType.INFORMATION);
    
    private int i = 0;
    
  
-    public TimerAlien(AlienGroupe x , View view  )
+    public TimerAlien( )
     {
-  
+   
                
     }
     
@@ -43,6 +39,7 @@ public class TimerAlien implements Runnable {
         try {
     
         this.i = this.i + 1 ;
+         System.out.println("fkgfkdsjgf" );
         Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(TimerAlien.class.getName()).log(Level.SEVERE, null, ex);

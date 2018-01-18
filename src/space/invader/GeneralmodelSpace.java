@@ -5,14 +5,30 @@
  */
 package space.invader;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import static java.time.Clock.system;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 
 
 
@@ -32,6 +48,7 @@ public class GeneralmodelSpace {
     private BulletGroupe bulletGroupe;
     private BulletGroupe bulletGroupeAlien;
     private ShieldGroupe shieldGroupe;
+    private TimerAlien TimerAlien1;
     
     private boolean links = false ;  
     private int level = 1;
@@ -45,16 +62,24 @@ public class GeneralmodelSpace {
     private boolean testshieldGroupCoalition = false;
     
     private int i;
+    private int playdTime = 0 ;
+    
+    private Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private TextInputDialog dialog;
+    private Button btOk;
     
     private List<Object> objectList = new ArrayList<Object>();
     
     public   GeneralmodelSpace(View view){
         this.view = view;
+        
         bulletGroupe = new BulletGroupe(view);
         bulletGroupeAlien = new BulletGroupe(view);
         shieldGroupe = new ShieldGroupe(view);
         rocket = new Rocket(view);
         alienGroupe = new AlienGroupe(view);
+        
+        
         objectList.add(bulletGroupe);
         objectList.add(bulletGroupeAlien);
         objectList.add(alienGroupe);
@@ -66,6 +91,91 @@ public class GeneralmodelSpace {
         objectList.add(alienGroupe);
         objectList.add(rocket);
         objectList.add(shieldGroupe);
+        
+        TimerAlien1 = new TimerAlien();
+        Thread thread = new Thread(TimerAlien1);
+        thread.setDaemon(true);
+        thread.start();
+        
+              alert.setTitle("End of the game");
+              alert.setHeaderText("You died! and didn't save the empire!");
+              alert.setContentText("Please come back when you are stronger.");
+              alert.setOnHidden(evt -> Platform.exit());
+               
+              dialog = new TextInputDialog("");
+              dialog.setTitle("you arre a winner");
+              dialog.setHeaderText("Congratulations you saved the empire! ");
+              dialog.setContentText("Please enter your name:");
+              btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+              
+              
+               btOk.setOnAction(new EventHandler<ActionEvent>() {
+    @Override public void handle(ActionEvent e) {
+     
+     String  name =   dialog.getEditor().getText();
+       
+      
+       
+                  String[]   strread ;
+              
+                  strread =  readFile();
+                  int score1;
+                  String name1;
+                  int score2;
+                  String name2;
+                  int score3;
+                  String name3;
+                  name1 = strread[0];
+                  score1 = Integer.parseInt(strread[1]);
+                  name2 = strread[2];
+                  score2 = Integer.parseInt(strread[3]);
+                  name3 = strread[4];
+                  score3 = Integer.parseInt(strread[5]);
+                  
+                
+              
+                  
+                 
+                  
+                  if (  score1 > playdTime )
+                  {
+                     name1 = name;
+                     score1 = playdTime;
+                      
+                  }
+                  else if (Integer.parseInt(strread[3]) > playdTime)
+                  {
+                      name2 = name;
+                      score2 = playdTime;
+                  }
+                  else if ( Integer.parseInt(strread[5]) > playdTime)
+                  {
+                      name3 = name;
+                      score3 = playdTime;
+                  }
+                 
+                 
+                   PrintWriter writer;
+         
+                   try {
+                       writer = new PrintWriter("myfile.txt", "UTF-8");
+                       writer.println(name1);
+                       writer.println(score1);
+                       writer.println(name2);
+                       writer.println(score2);
+                       writer.println(name3);
+                       writer.println(score3);
+                       writer.close();
+                   } catch (FileNotFoundException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (UnsupportedEncodingException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+       Platform.exit();
+
+    }
+    
+});
         
         
       
@@ -124,7 +234,7 @@ public class GeneralmodelSpace {
                   timer.stop();
                 //  lblLives.setText("lives : " + 0);
                   // source : http://code.makery.ch/blog/javafx-dialogs-official
-             //  alert.show();
+                alert.show();
              
                 }
            }
@@ -156,14 +266,14 @@ public class GeneralmodelSpace {
             // lblLevel.setText("" +level);
               alienGroupe.arrange();
               shieldGroupe.arrange();
-              lives = 3;
+               //lives = 3;
               //lblLevel.setText("lives: " +lives);
-              if (level >= 2) 
+              if (level >= 0) 
               {
-                // playdTime = TimerAlien1.getmilliseconds();
+                 playdTime = TimerAlien1.getmilliseconds();
                  timer.stop();
                  view.clearScreen();
-                // dialog.show();
+                 dialog.show();
               }
            }
        }
@@ -210,13 +320,14 @@ public class GeneralmodelSpace {
                bulletGroupe.goUp();
                bulletGroupeAlien.goDown();
                
-         
+          
               
-            //lblMilliseconds.setText( "seconds played: " + TimerAlien1.getmilliseconds());
+           playdTime = TimerAlien1.getmilliseconds();
+           
              }
           
         
-            
+          
         };
       timer.start();
                  
@@ -238,6 +349,48 @@ public class GeneralmodelSpace {
          double y = rocket.getY();
           bulletGroupe.AdNieweBullet(x + 50, y + 25);
      }
+     
+     public int GetLevel ()
+     {
+         return level;
+     }
+     
+      public int getLives ()
+     {
+         return lives;
+     }
+      
+      public int getPlaydTime()
+     {
+         return playdTime;
+     }
+      
+      
+          public String[]  readFile()
+    {
+    String[] strarry ;
+    strarry = new String[6];
+      //  source : https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
+          try(BufferedReader br = new BufferedReader(new FileReader("myfile.txt"))) {
+    
+    int i = 0;
+    StringBuilder sb = new StringBuilder();
+    String line = br.readLine();
+
+    while (line != null) {
+        strarry[i] = line;
+        i ++;
+        line = br.readLine();
+    }
+   
+}                  catch (IOException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+          return strarry;
+    }
+      
+      
+      
 
   }
 

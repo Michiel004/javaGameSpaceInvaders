@@ -125,7 +125,7 @@ public class View {
     public void speelStartGeluid(){
         
         
-        mediaPlayer.play();
+      //  mediaPlayer.play();
 
     }
     
