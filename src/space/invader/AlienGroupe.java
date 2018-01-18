@@ -6,6 +6,7 @@
 package space.invader;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -16,11 +17,13 @@ import java.util.Random;
 public class AlienGroupe extends Object {
     
     private List<Alien> alienList;
+    private List<Alien> alienListRemove;
     private double Level = 1;
 
     public AlienGroupe(View view) {
         super(view);
         alienList = new ArrayList<Alien>();
+        alienListRemove  = new ArrayList<Alien>();
         arrange();
         
     }
@@ -29,8 +32,8 @@ public class AlienGroupe extends Object {
         int maxColomn = 5;
         int maxRow = 3;
         
-        double stepsX = (int) (super.getView().getWidthScreen() / (maxColomn+1));
-        double stepsY = (int) ((super.getView().getHeightScreen()/2) / maxColomn);
+        double stepsX = (int) (1000/ (maxColomn+1));
+        double stepsY = (int) ((400) / maxColomn);
         
         System.out.println("" + stepsX);
         System.out.println("" + stepsY);
@@ -142,7 +145,10 @@ public class AlienGroupe extends Object {
      
      
        public boolean checkCoalition(Bullet bullet){
-         for (Alien alien : alienList){
+           Iterator<Alien> itr = alienList.iterator();
+           while(itr.hasNext()){
+                Alien alien = itr.next();
+     
           if (alien.getY() - 20  <= bullet.getY() & (alien.getY() + 50  >= bullet.getY()))
           {
                if (alien.getX() + 0.5 <=  bullet.getX() & (alien.getX() + 50  >= bullet.getX()))
@@ -151,25 +157,19 @@ public class AlienGroupe extends Object {
                 
                 if (alien.getHealth() <= 0 )
                 {
-                    alienList.remove(alien); 
-                }
-                
-              
-                  
+                    alienListRemove.add(alien);
+                    itr.remove();
+                    
+                } 
                return true;
           }
              
           }
-          
-    
-          
-          
-            
        }
          return false;
      }
      
-    
+   
      public void setLevel(double level)
      {
          this.Level = level;
@@ -196,14 +196,16 @@ public class AlienGroupe extends Object {
          return alienList.size() ;
      }
      
+     public List<Alien> getAlienList(){ return this.alienList; }
+     public Iterator<Alien> getAlienListRemove(){ return this.alienListRemove.iterator(); }
      
     
 
-    @Override
+   /* @Override
     public void update() {
        for (Alien alien : alienList){
            alien.update();
        }
-    }
+    }*/
     
 }

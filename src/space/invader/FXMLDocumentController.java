@@ -36,6 +36,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -84,21 +85,15 @@ public class FXMLDocumentController implements Initializable {
     private int lives = 3;
     
     private GeneralmodelSpace generalmodelSpace;
+    private GeneralView generalView;
     
-   
+
     
-
-   
-   
-
-
-  
    
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
-        
-        view = new View(canvas , pane);
         generalmodelSpace = new GeneralmodelSpace(view);
+        generalView = new GeneralView (generalmodelSpace , canvas , pane); 
       
         KeyUsed(); 
         startTimer();
@@ -119,51 +114,27 @@ public class FXMLDocumentController implements Initializable {
                level = generalmodelSpace.GetLevel();
                lblLevel.setText("" +level);
                lblMilliseconds.setText( "seconds played: " + generalmodelSpace.getPlaydTime());
-  
-            }
-                  
-               
-                  
+               //view.update();
+            }          
         };
-    
         timer.start();
-        
-   
     }
-     
-   
- 
-
-         
-     
-       
-   
+  
     private void KeyUsed(){
         canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {   
                if (event.getCode() == KeyCode.LEFT) {
-                  //rocket.goLeft();
                   generalmodelSpace.rocketgoLeft();
                }
                if (event.getCode() == KeyCode.RIGHT) {
-                   //rocket.goRigth();
                    generalmodelSpace.rocketgoRigth();
-             
-                 
                }
                if ((event.getCode() == KeyCode.SPACE) || (event.getCode() == KeyCode.UP)) {
-                 view.speelStartGeluid();
-                 
+               //  view.speelStartGeluid();
                 generalmodelSpace.adBullet();
-                //bulletGroupe.AdNieweBullet(x + 50, y + 25);
-               
-              
-               
             }
-}
-        
-        
+}       
         });
     }
     

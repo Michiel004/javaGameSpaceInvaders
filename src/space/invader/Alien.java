@@ -47,10 +47,10 @@ public class Alien extends Object {
         this.Health = Health;
     }
     
-    @Override
+   /* @Override
     public void update() {
         super.getView().drawAlien(super.getX(), super.getY(), this.Health);
-    }
+    }*/
     
     
 }

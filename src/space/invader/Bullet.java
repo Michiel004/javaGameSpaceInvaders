@@ -42,9 +42,9 @@ public class Bullet extends Object {
         
     }
 
-    @Override
+  /*  @Override
     public void update() {
         super.getView().drawBullet(super.getX(), super.getY());
-    }
+    }*/
     
 }

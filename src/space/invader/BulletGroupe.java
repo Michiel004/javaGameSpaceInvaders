@@ -75,13 +75,15 @@ public class BulletGroupe extends Object {
         return listBullety ;
      }
 
-    @Override
+   /* @Override
     public void update() {
       //  goUp();
        for (Bullet bullet : bulletList){
            bullet.update();
        }
-    }
+    }*/
+      
+ 
    
     
 }

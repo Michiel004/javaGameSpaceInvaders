@@ -14,12 +14,10 @@ public class Rocket extends Object {
     
     public Rocket(View view) {
         super(view);
-       // super.setX((view.getWidthScreen()/2));
-       // super.setY((view.getHeightScreen() - view.getHeightScreen()/8));
         
          super.setX(166.0);
-         super.setY((view.getHeightScreen() - view.getHeightScreen()/8));
-     
+         super.setY((800 - 800/8));
+      
     }
     
     public void goLeft(){
@@ -62,10 +60,10 @@ public class Rocket extends Object {
              
           
 
-    @Override
+   /* @Override
     public void update() {
         super.getView().drawRocket(super.getX(), super.getY());
-    }
+    }*/
     
     
     

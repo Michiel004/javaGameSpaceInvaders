@@ -6,6 +6,7 @@
 package space.invader;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 public class ShieldGroupe extends Object  {
     
     private List<Shield> ShieldList;
+    private List<Shield> ShieldListRemove;
 
     public ShieldGroupe(View view) {
         super(view);
@@ -25,6 +27,7 @@ public class ShieldGroupe extends Object  {
       public void arrange(){
         
         ShieldList = new ArrayList<Shield>();
+        ShieldListRemove = new ArrayList<Shield>();
         ShieldList.add(new Shield(20, 625, super.getView()));
         ShieldList.add(new Shield(250, 625, super.getView()));
         ShieldList.add(new Shield(450, 625, super.getView()));
@@ -47,6 +50,7 @@ public class ShieldGroupe extends Object  {
               
               if (shield.GetHealth()<= 0)
               {
+                  ShieldListRemove.add(shield);
                   ShieldList.remove(shield);
               }
                   
@@ -75,6 +79,7 @@ public class ShieldGroupe extends Object  {
               
               if (shield.GetHealth()<= 0)
               {
+                  ShieldListRemove.add(shield);
                   ShieldList.remove(shield);
               }
                 
@@ -89,12 +94,15 @@ public class ShieldGroupe extends Object  {
 
       
      }
+      
+       public List<Shield> getShieldList(){ return this.ShieldList; }
+       public Iterator<Shield> getShieldListRemove(){ return this.ShieldListRemove.iterator(); }
 
-    @Override
+   /* @Override
     public void update() {
          for (Shield shield : ShieldList){
            shield.update();
        }
-    }
+    }*/
     
 }

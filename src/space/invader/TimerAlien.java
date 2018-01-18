@@ -39,7 +39,6 @@ public class TimerAlien implements Runnable {
         try {
     
         this.i = this.i + 1 ;
-         System.out.println("fkgfkdsjgf" );
         Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(TimerAlien.class.getName()).log(Level.SEVERE, null, ex);

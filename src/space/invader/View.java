@@ -21,17 +21,19 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Gebruiker
  */
-public class View {
+public abstract class View {
     
-    private Canvas canvas;
+   /* private Canvas canvas;
     private double widthScreen;
     private double heightScreen;
-    private GraphicsContext graphic;
+    
     private MediaPlayer mediaPlayer;
     private Media hit ;
-    private AnchorPane pane;
+    private AnchorPane pane;*/
     
+  
     
+    /*
     public View(Canvas canvas , AnchorPane pane){
         this.canvas = canvas;
         this.pane = pane;
@@ -49,14 +51,17 @@ public class View {
         hit = new Media(getClass().getResource(filePath).toExternalForm());
         mediaPlayer = new MediaPlayer(hit);
         
-    }
+    }*/
+    /*
     
+    */
+    /*
     public void clearScreen(){
         graphic.clearRect(0, 0, widthScreen, heightScreen);
         
-        String filePath = "/space/sounds/8bit-laser-shot-01.wav";
-        hit = new Media(getClass().getResource(filePath).toExternalForm());
-        mediaPlayer = new MediaPlayer(hit);
+        //String filePath = "/space/sounds/8bit-laser-shot-01.wav";
+       // hit = new Media(getClass().getResource(filePath).toExternalForm());
+       // mediaPlayer = new MediaPlayer(hit);
         
        
     } 
@@ -73,8 +78,8 @@ public class View {
         graphic.fillRoundRect(x + 25, y , 50, 100, 10, 10);
         graphic.fillRoundRect(x , y + 50 , 100, 50, 10, 10);
         */
-    }
-    
+   // }
+    /*
     public void drawAlien(double x, double y, double Health){      
         Image image = new Image("/space/images/alien1.png", 50, 50, false, false);
         graphic.drawImage(image, x, y);   
@@ -136,4 +141,17 @@ public class View {
         mediaPlayer2.play();
     }
     
+    */
+    
+    protected GraphicsContext graphic;
+    protected Object object;
+    
+    public View(GraphicsContext graphic, Object object){
+        this.object = object;
+            this.graphic = graphic;
+    }
+
+    public abstract void update();
+    
+   public Object getObject() { return object; }
 }

@@ -48,10 +48,4 @@ public abstract class Object {
         return this.view;
     }
     
-    public abstract void update();
-
-    String openStream() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

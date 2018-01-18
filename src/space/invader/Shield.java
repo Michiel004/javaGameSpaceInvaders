@@ -30,9 +30,11 @@ public class Shield extends Object{
      return   this.Health;
     }
     
-    @Override
+  /*  @Override
     public void update() {
        super.getView().drawShield(super.getX(), super.getY(), this.Health);
-    }
+    }*/
+
+  
     
 }

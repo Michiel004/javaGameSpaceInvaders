@@ -69,6 +69,10 @@ public class GeneralmodelSpace {
     private Button btOk;
     
     private List<Object> objectList = new ArrayList<Object>();
+    private List<Object> objectListRemove = new ArrayList<Object>();
+    
+    private double heightScreen;
+    private double widthScreen;
     
     public   GeneralmodelSpace(View view){
         this.view = view;
@@ -86,11 +90,6 @@ public class GeneralmodelSpace {
         objectList.add(rocket);
         objectList.add(shieldGroupe);
         
-        objectList.add(bulletGroupe);
-        objectList.add(bulletGroupeAlien);
-        objectList.add(alienGroupe);
-        objectList.add(rocket);
-        objectList.add(shieldGroupe);
         
         TimerAlien1 = new TimerAlien();
         Thread thread = new Thread(TimerAlien1);
@@ -113,11 +112,7 @@ public class GeneralmodelSpace {
     @Override public void handle(ActionEvent e) {
      
      String  name =   dialog.getEditor().getText();
-       
-      
-       
                   String[]   strread ;
-              
                   strread =  readFile();
                   int score1;
                   String name1;
@@ -131,12 +126,7 @@ public class GeneralmodelSpace {
                   score2 = Integer.parseInt(strread[3]);
                   name3 = strread[4];
                   score3 = Integer.parseInt(strread[5]);
-                  
-                
-              
-                  
                  
-                  
                   if (  score1 > playdTime )
                   {
                      name1 = name;
@@ -175,15 +165,13 @@ public class GeneralmodelSpace {
 
     }
     
-});
-        
-        
-      
-        
+});      
        startTimer();
        
           
 }
+    
+    private int counter = 0; 
      
      private void startTimer() {
          
@@ -192,21 +180,10 @@ public class GeneralmodelSpace {
             @Override
             
             public void handle(long now) {
-                    
-               
-                view.clearScreen();
-              
-                
-                for (Object object : objectList){
-                    object.update();
-                }
-                
-               
-               
-            
-                  
-               
-                
+                counter++;   
+               if (counter >= (60 *0.1)){
+                   counter = 0;
+                        
         List<Bullet> bulletList = bulletGroupe.getBulletList();
         List<Bullet> bulletListAlien = bulletGroupeAlien.getBulletList();
               
@@ -218,21 +195,27 @@ public class GeneralmodelSpace {
           
            
            if  ((testShieldGroupeCoalition == true )){
+               Iterator<Shield> shieldList = shieldGroupe.getShieldListRemove();
+               while(shieldList.hasNext()){
+                   Shield shield = shieldList.next();
+                   objectListRemove.add(shield);
+                   shieldList.remove();
+               }
+               
+               objectListRemove.add(bullet);
                i.remove();
+               
            }
            
           boolean  testRocketCoalition = rocket.checkCoalition(bullet);
             
              if  ((testRocketCoalition == true )){
+                objectListRemove.add(bullet);
                 i.remove();
-                lives --;
-              
-               // lblLives.setText("lives : " +lives);
-              
+                  lives --;     
                 if (lives <= 0 )
                 {
                   timer.stop();
-                //  lblLives.setText("lives : " + 0);
                   // source : http://code.makery.ch/blog/javafx-dialogs-official
                 alert.show();
              
@@ -240,15 +223,7 @@ public class GeneralmodelSpace {
            }
              
        }
-         
-         
-       
-         
         
-                        
-               
-        
-                
            for (Iterator<Bullet> i = bulletList.iterator(); i.hasNext();){
            Bullet bullet = i.next();
          
@@ -257,22 +232,35 @@ public class GeneralmodelSpace {
            testshieldGroupCoalition = shieldGroupe.checkCoalitionUP(bullet);
            
            if  ((testshieldGroupCoalition == true) || (testalienGroupeCoalition == true )){
+               Iterator<Alien> alienList = alienGroupe.getAlienListRemove();
+               while(alienList.hasNext()){
+                   Alien alien = alienList.next();
+                   objectListRemove.add(alien);
+                   alienList.remove();
+               }
+               
+               Iterator<Shield> shieldList = shieldGroupe.getShieldListRemove();
+               while(shieldList.hasNext()){
+                   Shield shield = shieldList.next();
+                   objectListRemove.add(shield);
+                   shieldList.remove();
+               }
+               objectListRemove.add(bullet);
                i.remove();
            }
            
            if (testalienGroupeCoalition == true & (alienGroupe.numberofaliens() <= 0) )
            {
               level ++;
-            // lblLevel.setText("" +level);
+           
               alienGroupe.arrange();
               shieldGroupe.arrange();
-               //lives = 3;
-              //lblLevel.setText("lives: " +lives);
+        
               if (level >= 0) 
               {
                  playdTime = TimerAlien1.getmilliseconds();
                  timer.stop();
-                 view.clearScreen();
+               //  clearScreen();
                  dialog.show();
               }
            }
@@ -301,7 +289,7 @@ public class GeneralmodelSpace {
         
                bulletGroupeAlien.AdNieweBullet(x + 25, y + 50);
               
-               view.speelStartGeluid();;
+              // view.speelStartGeluid();;
                i = 0;
                }
               i = i +1;
@@ -323,6 +311,9 @@ public class GeneralmodelSpace {
           
               
            playdTime = TimerAlien1.getmilliseconds();
+                   
+               }
+
            
              }
           
@@ -388,9 +379,28 @@ public class GeneralmodelSpace {
                    }
           return strarry;
     }
+          
+          
+   public List<Object> getObjectList ()
+   {
+       return objectList; 
+   }
+   
+     public Iterator<Object> getobjectListRemove ()
+   {
+       return objectListRemove.iterator(); 
+   }
+   
+     public double getHeightScreen(){
+        return this.heightScreen;
+    }
+    
+    public double getWidthScreen(){
+        return this.widthScreen;
+    }
+    
+    
+    
       
-      
-      
-
   }
 
