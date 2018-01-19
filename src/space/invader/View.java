@@ -23,135 +23,27 @@ import javafx.scene.shape.Rectangle;
  */
 public abstract class View {
     
-   /* private Canvas canvas;
-    private double widthScreen;
-    private double heightScreen;
-    
-    private MediaPlayer mediaPlayer;
-    private Media hit ;
-    private AnchorPane pane;*/
-    
-  
-    
-    /*
-    public View(Canvas canvas , AnchorPane pane){
-        this.canvas = canvas;
-        this.pane = pane;
-        this.canvas.setFocusTraversable(true);
-         String image = "space/images/background.jpg";
-        pane.setStyle("-fx-background-image: url('" + image + "'); " +
-           "-fx-background-size: cover;"); 
-        
-        this.widthScreen = canvas.getBoundsInParent().getWidth();
-        this.heightScreen = canvas.getBoundsInParent().getHeight();
-        
-        this.graphic = canvas.getGraphicsContext2D();
-        
-        String filePath = "/space/sounds/8bit-laser-shot-01.wav";
-        hit = new Media(getClass().getResource(filePath).toExternalForm());
-        mediaPlayer = new MediaPlayer(hit);
-        
-    }*/
-    /*
-    
-    */
-    /*
-    public void clearScreen(){
-        graphic.clearRect(0, 0, widthScreen, heightScreen);
-        
-        //String filePath = "/space/sounds/8bit-laser-shot-01.wav";
-       // hit = new Media(getClass().getResource(filePath).toExternalForm());
-       // mediaPlayer = new MediaPlayer(hit);
-        
-       
-    } 
-            
-    public void drawRocket(double x , double y){
-       	Image image = new Image("/space/images/Spaceship.png", 100, 100, false, false);
-        graphic.drawImage(image, x, y);
-        
-        // test collision fields
-        /*
-        graphic.setFill(Color.GREEN);
-        graphic.setStroke(Color.BLACK);
-        graphic.setLineWidth(2);
-        graphic.fillRoundRect(x + 25, y , 50, 100, 10, 10);
-        graphic.fillRoundRect(x , y + 50 , 100, 50, 10, 10);
-        */
-   // }
-    /*
-    public void drawAlien(double x, double y, double Health){      
-        Image image = new Image("/space/images/alien1.png", 50, 50, false, false);
-        graphic.drawImage(image, x, y);   
-        
-        
-        graphic.setFill(Color.GREEN);
-        graphic.setStroke(Color.BLACK);
-        graphic.setLineWidth(2);
-        graphic.fillRoundRect(x, y - 15 , Health, 10, 10, 10);
-        graphic.strokeRoundRect(x, y - 15, Health, 10, 10, 10);
-
- 
-       
-    
-    }
-    
-    public void drawBullet(double x, double y){
- 
-            graphic.setFill(Color.YELLOW);
-            graphic.fillRect(x, y, 1, 20);
-
-    }
-    
-    public void drawShield(double x, double y, double Health){
-        graphic.setFill(Color.GREEN);
-        graphic.setStroke(Color.BLACK);
-        graphic.setLineWidth(2);
-        graphic.fillRoundRect(x, y -15  , Health, 10, 10, 10);
-        graphic.strokeRoundRect(x, y -15 , Health, 10, 10, 10);
-        
-        graphic.setFill(Color.BLUE);
-        graphic.fillRect(x, y, 100, 10);
-    }
-    
-    public void drawBang(double x, double y){
-       	Image image = new Image("/space/images/Spaceship.png", 100, 100, false, false);
-        graphic.drawImage(image, x, y);
-    }
-    
-    public double getHeightScreen(){
-        return this.heightScreen;
-    }
-    
-    public double getWidthScreen(){
-        return this.widthScreen;
-    }
-    
-    public void speelStartGeluid(){
-        
-        
-      //  mediaPlayer.play();
-
-    }
-    
-     public void StartSoundAlienLaser(){
-        String filePath = "/space/sounds/laser_alien.wav";
-        Media hit2 = new Media(getClass().getResource(filePath).toExternalForm());
-        MediaPlayer mediaPlayer2 = new MediaPlayer(hit2);
-        mediaPlayer2.play();
-    }
-    
-    */
-    
+    // this is the graphic variable
     protected GraphicsContext graphic;
+    // the Object that needs to be drawn  
     protected Object object;
-    
+    /**
+     * constructor of the View
+     * @param object this is the object that need to be displayd 
+     * @param graphic to view the BulletGroupe
+     */
     public View(GraphicsContext graphic, Object object){
         this.object = object;
             this.graphic = graphic;
     }
-
+    // this will draw the objects  
     public abstract void update();
     
+    
+    // getter
+     /**
+     * will retun the object
+     * @param object will be will returned.
+     */ 
    public Object getObject() { return object; }
 }

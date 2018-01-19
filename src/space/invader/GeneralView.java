@@ -35,7 +35,12 @@ public class GeneralView {
     private GeneralmodelSpace generalmodelSpace;
     private Canvas canvas;
   
-    
+    /**
+     * constructor of the GeneralView
+     * @param GeneralmodelSpace to ged al the needed functions.
+     * @param Canvas to draw the GeneralView
+     * @param AnchorPane to view the GeneralView
+     */
     public GeneralView ( GeneralmodelSpace generalmodelSpace , Canvas canvas ,  AnchorPane pane){
         
        this.generalmodelSpace = generalmodelSpace;
@@ -49,11 +54,8 @@ public class GeneralView {
         createViewList(generalmodelSpace , graphic);
         startTimer();
     }
-    
-    public void drawBackground(){
-        
-    }
-    
+   
+    // this object need to be viewd on the screen.
     public void createViewList(GeneralmodelSpace generalmodelSpace ,GraphicsContext graphic){
         List<Object> objectList = generalmodelSpace.getObjectList();
         for (Object object : objectList){
@@ -119,7 +121,6 @@ public class GeneralView {
       
                 if (view.getObject().equals(object)){
                     itr.remove();
-                   // objectListRemoved.remove();
                 }
             } 
         }
@@ -145,17 +146,12 @@ public class GeneralView {
         };
         timer.start();
     }   
-    
+
+     // this wil clear the screen.
+
     public void clearScreen(){
-        //graphic.clearRect(0, 0, generalmodelSpace.getWidthScreen(), generalmodelSpace.getHeightScreen());
         graphic.clearRect(0, 0, 1000, 800);
    
-     
-        
-        //String filePath = "/space/sounds/8bit-laser-shot-01.wav";
-       // hit = new Media(getClass().getResource(filePath).toExternalForm());
-       // mediaPlayer = new MediaPlayer(hit);
-        
        
     } 
     

@@ -87,13 +87,22 @@ public class FXMLDocumentController implements Initializable {
     private GeneralmodelSpace generalmodelSpace;
     private GeneralView generalView;
     
+    private MediaPlayer mediaPlayer;
+    private Media media ;
+    
 
     
    
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
+        // generate the main model.
         generalmodelSpace = new GeneralmodelSpace(view);
+        // generate the main view.
         generalView = new GeneralView (generalmodelSpace , canvas , pane); 
+        // initials the lazer sound.
+        URL thing = getClass().getResource("/space/sounds/8bit-laser-shot-01.wav");
+        media = new Media( thing.toString() );     
+        
       
         KeyUsed(); 
         startTimer();
@@ -108,13 +117,15 @@ public class FXMLDocumentController implements Initializable {
             @Override
             
             public void handle(long now) {
-                
+               
                lives = generalmodelSpace.getLives();
                lblLives.setText("lives : " + lives);
                level = generalmodelSpace.GetLevel();
                lblLevel.setText("" +level);
                lblMilliseconds.setText( "seconds played: " + generalmodelSpace.getPlaydTime());
-               //view.update();
+      
+        
+          
             }          
         };
         timer.start();
@@ -131,12 +142,30 @@ public class FXMLDocumentController implements Initializable {
                    generalmodelSpace.rocketgoRigth();
                }
                if ((event.getCode() == KeyCode.SPACE) || (event.getCode() == KeyCode.UP)) {
-               //  view.speelStartGeluid();
+                play();
                 generalmodelSpace.adBullet();
             }
 }       
         });
     }
+    
+    //  this funtions plays the lazer sound.
+    public void play()
+{
+  
+    try
+    {                                       
+        mediaPlayer  = new MediaPlayer(media);
+        mediaPlayer.play();
+    }
+    catch (Exception e)
+    {
+        System.out.println( e.getMessage() );
+        System.exit(0);
+    }        
+    
+    // source: https://stackoverflow.com/questions/12548603/playing-audio-using-javafx-mediaplayer-in-a-normal-java-application
+}
     
     
 }

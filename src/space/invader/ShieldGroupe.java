@@ -14,16 +14,22 @@ import java.util.List;
  * @author Gebruiker
  */
 public class ShieldGroupe extends Object  {
-    
+    // a list to keep trac of al the Shield made.
     private List<Shield> ShieldList;
+    // a list to keep trac of al the Shield tha needs to be removed.
     private List<Shield> ShieldListRemove;
-
+ /**
+     * constructor of the ShieldGroupe
+     *
+     * @param view to view the ShieldGroupe
+     * the shields wil be arranged on the screen
+     */
     public ShieldGroupe(View view) {
         super(view);
         arrange();
     }
     
-    
+    //the shields wil be arranged on the screen
       public void arrange(){
         
         ShieldList = new ArrayList<Shield>();
@@ -35,11 +41,14 @@ public class ShieldGroupe extends Object  {
         ShieldList.add(new Shield(850, 625, super.getView()));
         
     }
-
+ // getter
+     /**
+     * will retun true if a bullet has hit a shield from above els it wil return false
+     */
      public boolean checkCoalitionUP(Bullet bullet){
             
         for (Shield shield : ShieldList){
-        //  System.out.println("B :" + bullet.getY() + "S :" + shield.getY());
+     
           if (shield.getY() - 20  <= bullet.getY() & (shield.getY() + 10  >= bullet.getY()))
           {
           
@@ -65,7 +74,10 @@ public class ShieldGroupe extends Object  {
      }
      
      
-   
+    // getter
+     /**
+     * will retun true if a bullet has hit a shield from below els it wil return false
+     */
       public boolean checkCoalitionDown(Bullet bullet){
             
         for (Shield shield : ShieldList){
@@ -94,15 +106,17 @@ public class ShieldGroupe extends Object  {
 
       
      }
-      
+       // getter
+     /**
+     * this wil return the alle the Shields left on the screen.
+     * this hapens in the form of a ShieldList. 
+     */
        public List<Shield> getShieldList(){ return this.ShieldList; }
+       // getter
+     /**
+     * this wil return the alle the Shields on the screen that have to be removed.
+     * this hapens in the form of a ShieldListRemove. 
+     */
        public Iterator<Shield> getShieldListRemove(){ return this.ShieldListRemove.iterator(); }
 
-   /* @Override
-    public void update() {
-         for (Shield shield : ShieldList){
-           shield.update();
-       }
-    }*/
-    
 }

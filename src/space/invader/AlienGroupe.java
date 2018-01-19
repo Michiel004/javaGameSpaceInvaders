@@ -15,11 +15,16 @@ import java.util.Random;
  * @author Gebruiker
  */
 public class AlienGroupe extends Object {
-    
+    // a list to keep trac of al the Aliens made.
     private List<Alien> alienList;
+    // a list to keep trac of al the Aliens tha needs to be removed.
     private List<Alien> alienListRemove;
-    private double Level = 1;
 
+ /**
+     * constructor of the AlienGroupe
+     *
+     * @param view to view the AlienGroupe
+     */
     public AlienGroupe(View view) {
         super(view);
         alienList = new ArrayList<Alien>();
@@ -27,7 +32,7 @@ public class AlienGroupe extends Object {
         arrange();
         
     }
-    
+    // this function wil arrange the aliens on the screen.
     public void arrange(){
         int maxColomn = 5;
         int maxRow = 3;
@@ -44,7 +49,7 @@ public class AlienGroupe extends Object {
           }
         }  
     }
-    
+      // this function wil make alle te aliens on the screen wil go richt.
      public void goRigth(){
  
          if (this.right_x()  < 1000 )
@@ -57,7 +62,11 @@ public class AlienGroupe extends Object {
          
           }
     }
-     
+      // getter
+    /**
+     * will retun al the x coordinates of the aliens on the screen 
+     * @return listAlienx list of al the x  coordinates of the aliens on the screen
+     */
      public ArrayList getAllxCoordinates()
      {
          ArrayList<Double> listAlienx = new ArrayList<Double>();
@@ -68,7 +77,11 @@ public class AlienGroupe extends Object {
          }
         return listAlienx ;
      }
-     
+       // getter
+    /**
+     * will retun al the y coordinates of the aliens on the screen 
+     * @return listAlieny list of al the y coordinates of the aliens on the screen
+     */
      public ArrayList getAllyCoordinates()
      {
          ArrayList<Double> listAlieny = new ArrayList<Double>();
@@ -79,7 +92,7 @@ public class AlienGroupe extends Object {
          }
         return listAlieny ;
      }
-     
+     // this function wil make alle te aliens on the screen wil go left.
      public void goLeft(){
       
         if (this.left_x() > 0 )
@@ -92,7 +105,7 @@ public class AlienGroupe extends Object {
         }
      
     }
-     
+      // this function wil make alle te aliens on the screen wil go down.
      public void goDown(){
       
         if (this.left_x() > 0 )
@@ -105,7 +118,11 @@ public class AlienGroupe extends Object {
         }
      
     }
-     
+       // getter
+    /**
+     * will retun  the the smallest x cordinate on the screen of the aliens.
+     * @return lastIndex is the smallest x cordinate on the screen of the aliens.
+     */
      public double left_x(){
          
          double lastIndex = 1000 ;
@@ -118,6 +135,11 @@ public class AlienGroupe extends Object {
           return lastIndex ;
      }
      
+       // getter
+    /**
+     * will retun  the biggest x cordinate on the screen of the aliens.
+     * @return lastIndex is the biggest x cordinate on the screen of the aliens.
+     */
      public double right_x(){
         
           double lastIndex =0 ;
@@ -129,7 +151,11 @@ public class AlienGroupe extends Object {
        }
           return lastIndex ;
      }
-     
+      // getter
+     /**
+     * will retun  the biggest y cordinate on the screen of the aliens.
+     * @return lastIndex is the biggest y cordinate on the screen of the aliens.
+     */
      public double Max_y(){
         
           double lastIndex =0 ;
@@ -143,7 +169,10 @@ public class AlienGroupe extends Object {
      
      
      
-     
+      // getter
+     /**
+     * will retun true if a bullet has hit a alien els it wil return false
+     */
        public boolean checkCoalition(Bullet bullet){
            Iterator<Alien> itr = alienList.iterator();
            while(itr.hasNext()){
@@ -153,7 +182,7 @@ public class AlienGroupe extends Object {
           {
                if (alien.getX() + 0.5 <=  bullet.getX() & (alien.getX() + 50  >= bullet.getX()))
           {
-                alien.setHealth( alien.getHealth() - 25 / Level );
+                alien.setHealth( alien.getHealth() - 25 / 1 );
                 
                 if (alien.getHealth() <= 0 )
                 {
@@ -170,12 +199,12 @@ public class AlienGroupe extends Object {
      }
      
    
-     public void setLevel(double level)
-     {
-         this.Level = level;
-     }
-     
-     
+
+       // getter
+     /**
+     * will retun the x or y coordinate of a random alien 
+     * this coordinate wil be used to fire to the user. 
+     */
      public double  RandomAlien(int i)
      {
          double[] XenYArray = new double[2];
@@ -190,22 +219,26 @@ public class AlienGroupe extends Object {
          
          return XenYArray[i];
      }
-     
+      // getter
+     /**
+     * this wil return the amount of aliens left on the screen. 
+     */
      public int numberofaliens ()
      {
          return alienList.size() ;
      }
-     
+      // getter
+     /**
+     * this wil return the alle the aliens left on the screen.
+     * this hapens in the form of a alienList. 
+     */
      public List<Alien> getAlienList(){ return this.alienList; }
+     // getter
+     /**
+     * this wil return the alle the aliens on the screen that have to be removed.
+     * this hapens in the form of a alienListRemove. 
+     */
      public Iterator<Alien> getAlienListRemove(){ return this.alienListRemove.iterator(); }
      
-    
-
-   /* @Override
-    public void update() {
-       for (Alien alien : alienList){
-           alien.update();
-       }
-    }*/
     
 }

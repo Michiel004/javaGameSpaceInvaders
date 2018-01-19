@@ -13,15 +13,19 @@ import javafx.scene.paint.Color;
  * @author Gebruiker
  */
 public class ShieldView extends View {
-    
+    // the shield that needs to be drawn   
     Shield shield; 
-    
+    /**
+     * constructor of the ShieldView
+     * @param shield this is the rocket that need to be displayd 
+     * @param graphic to view the AlienGroupe
+     */
     public ShieldView (Shield shield , GraphicsContext graphic)
     {
         super(graphic, shield);
         this.shield = shield;
     }
-
+// this function wille draw the Shield.  
     @Override
     public void update() {
         

@@ -14,16 +14,24 @@ import javafx.scene.paint.Color;
  * @author Gebruiker
  */
 public class AlienView extends View {
-    
+    // the alien that needs to be drawn 
     private Alien alien;
+    // the image of the alien
     private Image image;
+    
+    /**
+     * constructor of the AlienView
+     * @param alien this is the alien that need to be displayd 
+     * @param graphic to view the AlienGroupe
+     */
+    
     public AlienView (Alien alien, GraphicsContext graphic) 
     {
         super(graphic, alien);
         image = new Image("/space/images/alien1.png", 50, 50, false, false);
         this.alien = alien;
     }
-
+    // this function wille draw the Alien.  
     @Override
     public void update() {
         

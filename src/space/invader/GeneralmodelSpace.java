@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import static java.time.Clock.system;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,6 +30,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 
@@ -54,8 +57,8 @@ public class GeneralmodelSpace {
     private int level = 1;
     private int lives = 3;
     
-   
-    
+    private MediaPlayer mediaPlayer;
+    private Media media ;
     
     private boolean testShieldGroupeCoalition = false;
     private boolean testalienGroupeCoalition = false;
@@ -68,12 +71,18 @@ public class GeneralmodelSpace {
     private TextInputDialog dialog;
     private Button btOk;
     
+    
+    
     private List<Object> objectList = new ArrayList<Object>();
     private List<Object> objectListRemove = new ArrayList<Object>();
     
     private double heightScreen;
     private double widthScreen;
     
+     /**
+     * constructor of the GeneralmodelSpace
+     * @param view to view the GeneralmodelSpace
+     */
     public   GeneralmodelSpace(View view){
         this.view = view;
         
@@ -95,6 +104,10 @@ public class GeneralmodelSpace {
         Thread thread = new Thread(TimerAlien1);
         thread.setDaemon(true);
         thread.start();
+        
+        URL thing = getClass().getResource("/space/sounds/8bit-laser-shot-01.wav");
+        media = new Media( thing.toString() );     
+        
         
               alert.setTitle("End of the game");
               alert.setHeaderText("You died! and didn't save the empire!");
@@ -180,6 +193,7 @@ public class GeneralmodelSpace {
             @Override
             
             public void handle(long now) {
+              
                 counter++;   
                if (counter >= (60 *0.1)){
                    counter = 0;
@@ -217,7 +231,7 @@ public class GeneralmodelSpace {
                 {
                   timer.stop();
                   // source : http://code.makery.ch/blog/javafx-dialogs-official
-                alert.show();
+                  alert.show();
              
                 }
            }
@@ -258,9 +272,8 @@ public class GeneralmodelSpace {
         
               if (level >= 0) 
               {
-                 playdTime = TimerAlien1.getmilliseconds();
+                 playdTime = TimerAlien1.getseconds();
                  timer.stop();
-               //  clearScreen();
                  dialog.show();
               }
            }
@@ -289,74 +302,82 @@ public class GeneralmodelSpace {
         
                bulletGroupeAlien.AdNieweBullet(x + 25, y + 50);
               
-              // view.speelStartGeluid();;
+              play();
                i = 0;
                }
               i = i +1;
-             
-                
              if (links ) {
-                   alienGroupe.goLeft();
-                  
+                   alienGroupe.goLeft();  
              }
              else 
              {
-                   alienGroupe.goRigth();
-                
+                   alienGroupe.goRigth(); 
                   
              }
                bulletGroupe.goUp();
                bulletGroupeAlien.goDown();
-               
-          
+           
               
-           playdTime = TimerAlien1.getmilliseconds();
+           playdTime = TimerAlien1.getseconds();
                    
                }
-
-           
+ 
              }
-          
-        
           
         };
       timer.start();
                  
 }
-     
+      // the tocket wil go left
      public void rocketgoLeft ()
      {
          rocket.goLeft();
      }
-     
+     // the tocket wil go rigth
      public void rocketgoRigth ()
      {
          rocket.goRigth();
      }
-     
+     // setter
+     /**
+     *@bulletGroupe a new bullet is added to the bulletGroupe
+     */
      public void adBullet()
      {       
          double x = rocket.getX();
          double y = rocket.getY();
           bulletGroupe.AdNieweBullet(x + 50, y + 25);
      }
-     
+     // getter
+     /**
+     *@level will retun the level of the curend game.
+     */
      public int GetLevel ()
      {
          return level;
      }
-     
+     // getter
+     /**
+     *@lives will retun the lives left in the game.
+     */
       public int getLives ()
      {
          return lives;
      }
-      
+       // getter
+     /**
+     *@playdTime will retun the seconds that the game is playd.
+     */
       public int getPlaydTime()
      {
          return playdTime;
      }
       
-      
+             
+    // getter
+     /**
+     * @strarry wil return the readed fille in text format.
+     */  
           public String[]  readFile()
     {
     String[] strarry ;
@@ -380,27 +401,53 @@ public class GeneralmodelSpace {
           return strarry;
     }
           
-          
+    // getter
+     /**
+     * @objectList wil return the alle the object from objectList.  
+     */      
    public List<Object> getObjectList ()
    {
        return objectList; 
    }
-   
+   // getter
+     /**
+     * @objectListRemove wil return the alle the object that need to be removed.  
+     */
      public Iterator<Object> getobjectListRemove ()
    {
        return objectListRemove.iterator(); 
    }
-   
+    // getter
+     /**
+     * @heightScreen wil return the alle the heigh of the Screen  
+     */
      public double getHeightScreen(){
         return this.heightScreen;
     }
-    
+       // getter
+     /**
+     * @widthScreen wil return the alle the width of the Screen  
+     */
     public double getWidthScreen(){
         return this.widthScreen;
+    } 
+        //  this funtions plays the lazer sound.
+    public void play()
+{
+  
+    try
+    {                                       
+        mediaPlayer  = new MediaPlayer(media);
+        mediaPlayer.play();
     }
+    catch (Exception e)
+    {
+        System.out.println( e.getMessage() );
+        System.exit(0);
+    }        
     
+    // source: https://stackoverflow.com/questions/12548603/playing-audio-using-javafx-mediaplayer-in-a-normal-java-application
+}
     
-    
-      
   }
 

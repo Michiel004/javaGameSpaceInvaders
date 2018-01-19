@@ -21,7 +21,7 @@ public class TimerAlien implements Runnable {
    
 
 
-   
+   // this variable will keep track of the seconds that the game is playd. 
    private int i = 0;
    
  
@@ -30,9 +30,7 @@ public class TimerAlien implements Runnable {
    
                
     }
-    
-    
-
+  
     @Override
     public void run() {
         while (true) {         
@@ -47,7 +45,11 @@ public class TimerAlien implements Runnable {
     }
 
  }
-     public int getmilliseconds ()
+      // getter
+     /**
+     * will retun the seconds that the game is playd.
+     */
+     public int getseconds ()
 {
     
     return this.i;
